@@ -1,0 +1,15 @@
+# ICR FD&C Fresher Project - rocket and launch parameters (SI units, angles in degrees)
+# Thrust curve: thrust_curve.csv (time_s, thrust_N)
+# Drag curve: cd_mach.csv (mach, cd) - referenced to the area of a circle of diameter d
+
+m_dry: 50.0 # kg, mass with no propellant
+m_prop: 11.20 # kg, propellant mass at ignition (all burnt by end of thrust curve)
+d: 0.177 # m, reference diameter
+
+rail_length: 12.0 # m
+rail_elevation: 84.0 # deg, up from horizontal (90 = vertical)
+rail_heading: 90.0 # deg, clockwise from north (90 = tilted towards east)
+
+h_site: 0.0 # m above sea level
+g: 9.81 # m/s^2
+
