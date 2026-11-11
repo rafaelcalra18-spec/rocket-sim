@@ -18,15 +18,13 @@ def thrust(t):
     time_thrust = thrust_data[:,0]
     thrust_values = thrust_data[:,1]
     
-
     return np.interp(t, time_thrust, thrust_values)
 
+#Interpolates the mach points, to get a continuous function of drag coefficient over time
 def drag_coefficient(mach):
     cd_data = np.loadtxt("data/cd_mach.csv", delimiter=",", skiprows=1)
+
     mach_values = cd_data[:,0]
     drag_coefficent_values = cd_data[:,1]
 
     return np.interp(mach, mach_values, drag_coefficent_values)
-
-print(f'drag_coefficient(0.035): {drag_coefficient(0.035)}')
-print(f'thrust(0.035): {thrust(0.035)}')
