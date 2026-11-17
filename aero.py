@@ -15,7 +15,7 @@ def drag_force(v, rho, a):
     mach = speed / a
     Cd = drag_coefficient(mach)
     magnitude = 0.5 * rho * speed**2 * Cd * A_ref
-    return -magnitude * v / speed  # points against the velocity
+    return -magnitude * v / speed  # points against the velocity (v/speed is the unit direction vector)
 
 if __name__ == '__main__':
     print("drag_force([0, 0, 100], 1.225, 340.3) =", drag_force([0, 0, 100], 1.225, 340.3))
