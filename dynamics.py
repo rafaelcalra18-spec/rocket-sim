@@ -3,7 +3,7 @@ from rocket import thrust,  drag_coefficient, mdot, params
 from aero import drag_force
 from atmosphere import isa
 
-def derivative(t, state): 
+def derivative(t, state, deployment): 
     theta = np.radians(params['rail_elevation'])   # 84 -> 1.466
     psi = np.radians(params['rail_heading'])       # 90 -> 1.571
 
@@ -24,6 +24,10 @@ def derivative(t, state):
     g = np.array([0, 0, - params['g']]) # vector of weight (in this case the 1/m removes m)
     P, T, rho, speed_sound = isa(h) # take all the atmospheric data from ISA
 
+    # This is all the parameters of the actuator beeing controled
+    Cd_airbrake = 2.0
+    Area_airbrake = 0.02
+    drag_airbrakes = 0.5 * rho * mod_v**2 * Cd_airbrake * Area_airbrake * deployment  
 
     # This is the phase of the rocket in the rail
     if np.dot(position, rail_direction) < params['rail_length']: # valid till it's off the rail
@@ -35,7 +39,8 @@ def derivative(t, state):
 
     else:
         d = np.array([vx, vy, vz]) / mod_v # create the direction vector (used in unconstrained motion)
-        a = 1/m * (thrust(t)*d + drag_force(v, rho, speed_sound)) + g # equation of motion in the air (off the rail)
+        drag_total = drag_force(v, rho, speed_sound) + drag_airbrakes * d
+        a = 1/m * (thrust(t)*d - drag_total) + g # equation of motion in the air (off the rail)
     
     ax, ay, az = a[0], a[1], a[2]
 

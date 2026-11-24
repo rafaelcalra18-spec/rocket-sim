@@ -2,11 +2,11 @@ import numpy as np
 from dynamics import derivative
 from rocket import params
 
-def Euler(derivative, t, state, dt):
-    state = state + derivative(t, state)*dt
+def Euler(derivative, t, state, dt, deployment):
+    state = state + derivative(t, state, deployment)*dt
     t += dt
         
-    return state, t
+    return state, t, deployment
 
 if __name__ == "__main__":
     def f(t, y):
