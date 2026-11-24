@@ -30,3 +30,4 @@ if __name__ == '__main__':
     plt.title("Drag at sea level (rho = 1.225, a = 340.3)")
     plt.grid(alpha=0.3)
     plt.show()
+
