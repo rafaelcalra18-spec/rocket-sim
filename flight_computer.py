@@ -16,15 +16,19 @@ def pid(state, t, deployment):
         Cd_ship = drag_coefficient(v_dot/speed_sound)
         Area_airbrake = 0.02
         Area_ship = 0.02460
-        m_dry = 50
-        target = 2500
+        m_dry = params['m_dry']
+        target = 2750
 
         # apogee calculation
         k = (rho/(2*m_dry))*(Cd_airbrake*Area_airbrake*deployment + Cd_ship*Area_ship)
         hmax = (1/(2*k)) * np.log((9.81 + vz**2 *k)/9.81) + z # equation for apogee height, derived in notebook
 
         # Error calculation
-        Error = target - hmax
+        Error = hmax - target # convention, needing to break more implies a positive error
 
         # PID
-        #bla bla bla math stuff
+        Kp = 0.08 #proportional term, must be tuned
+        deployment = Kp * Error #PID equation only P now
+        deployment = np.clip(deployment, 0, 1) # cliping the output to what the actuator takes in [0,1]
+
+        return deployment
